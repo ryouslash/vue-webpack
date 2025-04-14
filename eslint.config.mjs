@@ -1,30 +1,20 @@
+import { defineConfig } from "eslint/config";
+import js from "@eslint/js";
 import globals from "globals";
-import pluginJs from "@eslint/js";
 import pluginVue from "eslint-plugin-vue";
-import configPrettier from "eslint-config-prettier";
 
-export default [
+export default defineConfig([
   {
-    files: ["webpack.config.js", "webpack.*.js", "vite.config.js"],
-    languageOptions: {
-      sourceType: "commonjs",
-      globals: globals.node,
-    },
+    ignores: ["dist/**", "webpack.*.js", "postcss.config.js"],
   },
   {
-    files: ["**/*.{js,mjs,cjs,jsx,vue}"],
-    languageOptions: {
-      sourceType: "module",
-      ecmaVersion: "latest",
-      globals: globals.browser,
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
-        },
-      },
-    },
+    files: ["**/*.{js,mjs,cjs,vue}"],
+    plugins: { js },
+    extends: ["js/recommended"],
   },
-  ...pluginVue.configs["flat/recommended"],
-  pluginJs.configs.recommended,
-  configPrettier,
-];
+  {
+    files: ["**/*.{js,mjs,cjs,vue}"],
+    languageOptions: { globals: globals.browser },
+  },
+  pluginVue.configs["flat/essential"],
+]);
