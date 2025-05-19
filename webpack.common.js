@@ -141,6 +141,7 @@ module.exports = {
     },
   },
   resolve: {
+    extensions: [".ts", ".js"],
     alias: {
       "@js": path.resolve(__dirname, "src/js"),
       "@scss": path.resolve(__dirname, "src/scss"),
